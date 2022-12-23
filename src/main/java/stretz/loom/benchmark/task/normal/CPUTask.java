@@ -3,6 +3,7 @@ package stretz.loom.benchmark.task.normal;
 import stretz.loom.benchmark.strategy.cpu.CPURunner;
 import stretz.loom.benchmark.strategy.cpu.CalculationStrategy;
 import stretz.loom.benchmark.strategy.cpu.CalculatorFactory;
+import stretz.loom.benchmark.strategy.cpu.SimpleCalculation;
 import stretz.loom.benchmark.task.Task;
 import stretz.loom.benchmark.task.TaskState;
 
@@ -14,10 +15,19 @@ public class CPUTask implements Task {
     private CalculationStrategy strategy;
     private final int maxThreads;
 
+    public CPUTask() {
+        this.strategy = new SimpleCalculation(1000, Integer.MAX_VALUE);
+        this.maxThreads = 10000000;
+    }
+    public CPUTask(int maxThreads) {
+        this.strategy = new SimpleCalculation(1000, Integer.MAX_VALUE);
+        this.maxThreads = maxThreads;
+    }
     public CPUTask(CalculationStrategy strategy, int maxThreads) {
         this.strategy = strategy;
         this.maxThreads = maxThreads;
     }
+
     @Override
     public TaskState execute() {
         this.state = TaskState.ACTIVE;

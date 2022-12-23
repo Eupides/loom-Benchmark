@@ -12,8 +12,11 @@ import java.util.concurrent.Executors;
 public class IoTask implements Task {
     private TaskState state = TaskState.NOT_STARTED;
     private final int fileNumber;
-    private final String path = "/home/eupides/prog/uni/projectLoomBenchmark/tests/";
+    private final String path = "./tests/";
 
+    public IoTask() {
+        this.fileNumber = 100;
+    }
     public IoTask(int fileNumber) {
         this.fileNumber = fileNumber;
     }
