@@ -3,6 +3,7 @@ package stretz.loom;
 import stretz.loom.benchmark.task.Task;
 import stretz.loom.benchmark.task.loom.CPUTask;
 import stretz.loom.benchmark.task.loom.IoTask;
+import stretz.loom.benchmark.task.loom.MemoryTask;
 
 /**
  * Main Entry into the program
@@ -14,6 +15,10 @@ import stretz.loom.benchmark.task.loom.IoTask;
  *      3.: maximum threads
  * IO:
  *      3.: number of created files
+ * MEM:
+ *      3.: number of threads
+ *      4.: number of bloat objects
+ *      5.: number of bloat sub-object per bloat object
  */
 public class Main {
     public static void main(String[] args) {
@@ -24,13 +29,19 @@ public class Main {
         if(threadType.equals("loom")) {
             switch (taskType) {
                 case "CPU":
-                    task = new CPUTask();
+                    int maxThreads = args.length < 3 ? 10000000 : Integer.parseInt(args[2]);
+                    task = new CPUTask(maxThreads);
                     break;
                 case "IO":
-                    task = new IoTask();
+                    int fileNumber = args.length < 3 ? 100 : Integer.parseInt(args[2]);
+                    task = new IoTask(fileNumber);
                     break;
                 case "MEM":
-                    System.err.println("MEM needs to be implemented");
+                    int bloatCount = args.length < 3 ? 100 : Integer.parseInt(args[2]);
+                    int objects = args.length < 4 ? 100: Integer.parseInt(args[3]);
+                    int subObjects = args.length < 5 ? 100: Integer.parseInt(args[4]);
+                    task = new MemoryTask(bloatCount, objects, subObjects);
+                    break;
                 default:
                     System.err.println("Task Type invalid, please use CPU, IO, or MEM");
                     break;
@@ -38,13 +49,19 @@ public class Main {
         } else if(threadType.equals("normal")){
             switch (taskType) {
                 case "CPU":
-                    task = new stretz.loom.benchmark.task.normal.CPUTask();
+                    int maxThreads = args.length < 3 ? 10000000 : Integer.parseInt(args[2]);
+                    task = new stretz.loom.benchmark.task.normal.CPUTask(maxThreads);
                     break;
                 case "IO":
-                    task = new stretz.loom.benchmark.task.normal.IoTask();
+                    int fileNumber = args.length < 3 ? 100 : Integer.parseInt(args[2]);
+                    task = new stretz.loom.benchmark.task.normal.IoTask(fileNumber);
                     break;
                 case "MEM":
-                    System.err.println("MEM needs to be implemented");
+                    int bloatCount = args.length < 3 ? 100 : Integer.parseInt(args[2]);
+                    int objects = args.length < 4 ? 100: Integer.parseInt(args[3]);
+                    int subObjects = args.length < 5 ? 100: Integer.parseInt(args[4]);
+                    task = new stretz.loom.benchmark.task.normal.MemoryTask(bloatCount, objects, subObjects);
+                    break;
                 default:
                     System.err.println("Task Type invalid, please use CPU, IO, or MEM");
                     break;

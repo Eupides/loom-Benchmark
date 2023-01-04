@@ -3,7 +3,7 @@ package stretz.loom.benchmark.strategy.memory;
 import java.util.ArrayList;
 
 public class MemoryObject {
-    private ArrayList<Integer> list;
+    private ArrayList<Integer> list = new ArrayList<>();
 
     public MemoryObject(int numberOfObjects) {
         this.fillList(numberOfObjects);

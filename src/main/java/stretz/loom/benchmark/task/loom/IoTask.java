@@ -14,9 +14,6 @@ public class IoTask implements Task {
     private final int fileNumber;
     private final String path = "./tests/";
 
-    public IoTask() {
-        this.fileNumber = 100;
-    }
     public IoTask(int fileNumber) {
         this.fileNumber = fileNumber;
     }
@@ -33,7 +30,7 @@ public class IoTask implements Task {
 
         try (ExecutorService editorExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
             final Object lock = new Object();
-            /** @todo make writing threads a variable, also fix filepath */
+
             int editorMax = 100000;
             for (int j = 1; j <= editorMax; j++) {
                 FileEditor editor = new FileEditor(this.path + "1", "Thread " + j + "\n", lock);

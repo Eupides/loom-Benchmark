@@ -15,16 +15,8 @@ public class CPUTask implements Task {
     private CalculationStrategy strategy;
     private final int maxThreads;
 
-    public CPUTask() {
-        this.strategy = new SimpleCalculation(1000, Integer.MAX_VALUE);
-        this.maxThreads = 10000000;
-    }
     public CPUTask(int maxThreads) {
         this.strategy = new SimpleCalculation(1000, Integer.MAX_VALUE);
-        this.maxThreads = maxThreads;
-    }
-    public CPUTask(CalculationStrategy strategy, int maxThreads) {
-        this.strategy = strategy;
         this.maxThreads = maxThreads;
     }
 

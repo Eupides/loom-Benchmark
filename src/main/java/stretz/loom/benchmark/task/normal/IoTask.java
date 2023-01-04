@@ -11,17 +11,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Handling of the IO Tasks
- * @TODO Checking if folder exists
- * @TODO path needs to be relative
  */
 public class IoTask implements Task {
     private TaskState state = TaskState.NOT_STARTED;
     private final int fileNumber;
     private final String path = "./tests/";
 
-    public IoTask() {
-        this.fileNumber = 100;
-    }
     public IoTask(int fileNumber) {
         this.fileNumber = fileNumber;
     }
