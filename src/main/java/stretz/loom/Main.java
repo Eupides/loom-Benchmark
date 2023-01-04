@@ -22,21 +22,21 @@ import stretz.loom.benchmark.task.loom.MemoryTask;
  */
 public class Main {
     public static void main(String[] args) {
-        String taskType = args[0];
-        String threadType = args[1];
+        String taskType = args[0].toLowerCase();
+        String threadType = args[1].toLowerCase();
         Task task = null;
 
         if(threadType.equals("loom")) {
             switch (taskType) {
-                case "CPU":
+                case "cpu":
                     int maxThreads = args.length < 3 ? 10000000 : Integer.parseInt(args[2]);
                     task = new CPUTask(maxThreads);
                     break;
-                case "IO":
+                case "io":
                     int fileNumber = args.length < 3 ? 100 : Integer.parseInt(args[2]);
                     task = new IoTask(fileNumber);
                     break;
-                case "MEM":
+                case "mem":
                     int bloatCount = args.length < 3 ? 100 : Integer.parseInt(args[2]);
                     int objects = args.length < 4 ? 100: Integer.parseInt(args[3]);
                     int subObjects = args.length < 5 ? 100: Integer.parseInt(args[4]);
@@ -48,15 +48,15 @@ public class Main {
             }
         } else if(threadType.equals("normal")){
             switch (taskType) {
-                case "CPU":
+                case "cpu":
                     int maxThreads = args.length < 3 ? 10000000 : Integer.parseInt(args[2]);
                     task = new stretz.loom.benchmark.task.normal.CPUTask(maxThreads);
                     break;
-                case "IO":
+                case "io":
                     int fileNumber = args.length < 3 ? 100 : Integer.parseInt(args[2]);
                     task = new stretz.loom.benchmark.task.normal.IoTask(fileNumber);
                     break;
-                case "MEM":
+                case "mem":
                     int bloatCount = args.length < 3 ? 100 : Integer.parseInt(args[2]);
                     int objects = args.length < 4 ? 100: Integer.parseInt(args[3]);
                     int subObjects = args.length < 5 ? 100: Integer.parseInt(args[4]);
