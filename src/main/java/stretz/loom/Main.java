@@ -20,6 +20,7 @@ import stretz.loom.benchmark.task.loom.MemoryTask;
  *      3.: number of threads
  *      4.: number of bloat objects
  *      5.: number of bloat sub-object per bloat object
+ *      6.: number of seconds each Thread should sleep before finishing
  */
 public class Main {
     public static void main(String[] args) {
@@ -42,7 +43,8 @@ public class Main {
                     int bloatCount = args.length < 3 ? 100 : Integer.parseInt(args[2]);
                     int objects = args.length < 4 ? 100: Integer.parseInt(args[3]);
                     int subObjects = args.length < 5 ? 100: Integer.parseInt(args[4]);
-                    task = new MemoryTask(bloatCount, objects, subObjects);
+                    int waitTime = args.length < 6 ? 1: Integer.parseInt(args[5]);
+                    task = new MemoryTask(bloatCount, objects, subObjects, waitTime);
                     break;
                 default:
                     System.err.println("Task Type invalid, please use CPU, IO, or MEM");
@@ -63,7 +65,8 @@ public class Main {
                     int bloatCount = args.length < 3 ? 100 : Integer.parseInt(args[2]);
                     int objects = args.length < 4 ? 100: Integer.parseInt(args[3]);
                     int subObjects = args.length < 5 ? 100: Integer.parseInt(args[4]);
-                    task = new stretz.loom.benchmark.task.normal.MemoryTask(bloatCount, objects, subObjects);
+                    int waitTime = args.length < 6 ? 1: Integer.parseInt(args[5]);
+                    task = new stretz.loom.benchmark.task.normal.MemoryTask(bloatCount, objects, subObjects, waitTime);
                     break;
                 default:
                     System.err.println("Task Type invalid, please use CPU, IO, or MEM");

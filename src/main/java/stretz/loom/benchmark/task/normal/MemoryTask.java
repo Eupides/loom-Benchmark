@@ -13,11 +13,13 @@ public class MemoryTask implements Task {
     private final int bloatCount;
     private final int objectNumber;
     private final int subObjectNumber;
+    private final int waitTime;
 
-    public MemoryTask(int bloatCount, int objectNumber, int subObjectNumber) {
+    public MemoryTask(int bloatCount, int objectNumber, int subObjectNumber, int waitTime) {
         this.bloatCount = bloatCount;
         this.objectNumber = objectNumber;
         this.subObjectNumber = subObjectNumber;
+        this.waitTime = waitTime;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class MemoryTask implements Task {
 
         try (ThreadPoolExecutor bloatExecutor = (ThreadPoolExecutor) Executors.newCachedThreadPool()) {
             for (int i=0; i < bloatCount; i++) {
-                bloatExecutor.execute(new MemoryBloat(objectNumber, subObjectNumber));
+                bloatExecutor.execute(new MemoryBloat(waitTime, objectNumber, subObjectNumber));
             }
         }
 
