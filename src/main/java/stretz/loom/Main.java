@@ -15,6 +15,7 @@ import stretz.loom.benchmark.task.loom.MemoryTask;
  *      3.: maximum threads
  * IO:
  *      3.: number of created files
+ *      4.: number of editors who want to edit the first file
  * MEM:
  *      3.: number of threads
  *      4.: number of bloat objects
@@ -34,7 +35,8 @@ public class Main {
                     break;
                 case "io":
                     int fileNumber = args.length < 3 ? 100 : Integer.parseInt(args[2]);
-                    task = new IoTask(fileNumber);
+                    int editorNumber = args.length < 4 ? 10000: Integer.parseInt(args[3]);
+                    task = new IoTask(fileNumber, editorNumber);
                     break;
                 case "mem":
                     int bloatCount = args.length < 3 ? 100 : Integer.parseInt(args[2]);
@@ -54,7 +56,8 @@ public class Main {
                     break;
                 case "io":
                     int fileNumber = args.length < 3 ? 100 : Integer.parseInt(args[2]);
-                    task = new stretz.loom.benchmark.task.normal.IoTask(fileNumber);
+                    int editorNumber = args.length < 4 ? 10000: Integer.parseInt(args[3]);
+                    task = new stretz.loom.benchmark.task.normal.IoTask(fileNumber, editorNumber);
                     break;
                 case "mem":
                     int bloatCount = args.length < 3 ? 100 : Integer.parseInt(args[2]);

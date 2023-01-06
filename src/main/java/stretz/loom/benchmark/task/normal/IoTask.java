@@ -15,10 +15,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class IoTask implements Task {
     private TaskState state = TaskState.NOT_STARTED;
     private final int fileNumber;
+    private final int editorNumber;
     private final String path = "./tests/";
 
-    public IoTask(int fileNumber) {
+    public IoTask(int fileNumber, int editorNumber) {
         this.fileNumber = fileNumber;
+        this.editorNumber = editorNumber;
     }
 
     @Override
@@ -34,9 +36,7 @@ public class IoTask implements Task {
 
         try (ThreadPoolExecutor editorExecutor = (ThreadPoolExecutor) Executors.newCachedThreadPool()) {
             final Object lock = new Object();
-            /** @todo make writing threads a variable, also fix filepath */
-            int editorMax = 100000;
-            for (int j = 1; j <= editorMax; j++) {
+            for (int j = 1; j <= editorNumber; j++) {
                 FileEditor editor = new FileEditor(this.path + "1", "Thread " + j + "\n", lock);
                 editorExecutor.execute(editor);
             }
