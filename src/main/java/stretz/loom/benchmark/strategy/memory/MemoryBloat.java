@@ -22,7 +22,7 @@ public class MemoryBloat implements Runnable {
         }
 
         try {
-            TimeUnit.SECONDS.sleep(waitTime);
+            if(waitTime > 0) TimeUnit.SECONDS.sleep(waitTime);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
