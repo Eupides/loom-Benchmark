@@ -6,8 +6,7 @@ public class CalculatorFactory {
             SimpleCalculation newStrategy = (SimpleCalculation) strategy;
             return new SimpleCalculation(
                     newStrategy.getCalculationCycles(),
-                    newStrategy.getMaxInt(),
-                    newStrategy.getSleepTime());
+                    newStrategy.getMaxInt());
         } else {
             throw new IllegalArgumentException("CalculationStrategy now accepted");
         }

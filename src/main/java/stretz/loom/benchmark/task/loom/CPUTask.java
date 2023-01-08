@@ -14,10 +14,12 @@ public class CPUTask implements Task {
     private TaskState state = TaskState.NOT_STARTED;
     private CalculationStrategy strategy;
     private final int maxThreads;
+    private final int waitTime;
 
-    public CPUTask(int maxThreads) {
-        this.strategy = new SimpleCalculation(1000, Integer.MAX_VALUE);
+    public CPUTask(int maxThreads, int calculationCycles, int threadSleepTime, int maxValue) {
+        this.strategy = new SimpleCalculation(calculationCycles, maxValue);
         this.maxThreads = maxThreads;
+        this.waitTime = threadSleepTime;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class CPUTask implements Task {
 
         try (ExecutorService calculatorExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
             for (int i = 0; i < maxThreads; i++) {
-                CPURunner runner = new CPURunner(CalculatorFactory.getNewCalculator(this.strategy));
+                CPURunner runner = new CPURunner(CalculatorFactory.getNewCalculator(this.strategy), waitTime);
                 calculatorExecutor.execute(runner);
             }
         }
