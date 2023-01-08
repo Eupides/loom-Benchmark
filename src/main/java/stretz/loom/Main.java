@@ -13,6 +13,9 @@ import stretz.loom.benchmark.task.loom.MemoryTask;
  * non-required (dependent on task-type):
  * CPU:
  *      3.: maximum threads
+ *      4.: number of calculation cycles
+ *      5.: time in seconds a thread should sleep after ending a calculation
+ *      6.: the max value of a calculation
  * IO:
  *      3.: number of created files
  *      4.: number of editors who want to edit the first file
@@ -31,19 +34,22 @@ public class Main {
         if(threadType.equals("loom")) {
             switch (taskType) {
                 case "cpu":
-                    int maxThreads = args.length < 3 ? 10000000 : Integer.parseInt(args[2]);
-                    task = new CPUTask(maxThreads);
+                    int maxThreads = args.length < 3 ? 1000 : Integer.parseInt(args[2]);
+                    int calculationCycles = args.length < 4 ? 10 : Integer.parseInt(args[3]);
+                    int threadSleepTime = args.length < 5 ? 0 : Integer.parseInt(args[4]);
+                    int maxValue = args.length < 6 ? Integer.MAX_VALUE : Integer.parseInt(args[4]);
+                    task = new CPUTask(maxThreads, calculationCycles, threadSleepTime, maxValue);
                     break;
                 case "io":
                     int fileNumber = args.length < 3 ? 100 : Integer.parseInt(args[2]);
-                    int editorNumber = args.length < 4 ? 10000: Integer.parseInt(args[3]);
+                    int editorNumber = args.length < 4 ? 10000 : Integer.parseInt(args[3]);
                     task = new IoTask(fileNumber, editorNumber);
                     break;
                 case "mem":
                     int bloatCount = args.length < 3 ? 100 : Integer.parseInt(args[2]);
-                    int objects = args.length < 4 ? 100: Integer.parseInt(args[3]);
-                    int subObjects = args.length < 5 ? 100: Integer.parseInt(args[4]);
-                    int waitTime = args.length < 6 ? 1: Integer.parseInt(args[5]);
+                    int objects = args.length < 4 ? 100 : Integer.parseInt(args[3]);
+                    int subObjects = args.length < 5 ? 100 : Integer.parseInt(args[4]);
+                    int waitTime = args.length < 6 ? 0 : Integer.parseInt(args[5]);
                     task = new MemoryTask(bloatCount, objects, subObjects, waitTime);
                     break;
                 default:
@@ -53,8 +59,11 @@ public class Main {
         } else if(threadType.equals("normal")){
             switch (taskType) {
                 case "cpu":
-                    int maxThreads = args.length < 3 ? 10000000 : Integer.parseInt(args[2]);
-                    task = new stretz.loom.benchmark.task.normal.CPUTask(maxThreads);
+                    int maxThreads = args.length < 3 ? 1000 : Integer.parseInt(args[2]);
+                    int calculationCycles = args.length < 4 ? 10 : Integer.parseInt(args[3]);
+                    int threadSleepTime = args.length < 5 ? 0 : Integer.parseInt(args[4]);
+                    int maxValue = args.length < 6 ? Integer.MAX_VALUE : Integer.parseInt(args[4]);
+                    task = new stretz.loom.benchmark.task.normal.CPUTask(maxThreads, calculationCycles, threadSleepTime, maxValue);
                     break;
                 case "io":
                     int fileNumber = args.length < 3 ? 100 : Integer.parseInt(args[2]);
@@ -63,9 +72,9 @@ public class Main {
                     break;
                 case "mem":
                     int bloatCount = args.length < 3 ? 100 : Integer.parseInt(args[2]);
-                    int objects = args.length < 4 ? 100: Integer.parseInt(args[3]);
-                    int subObjects = args.length < 5 ? 100: Integer.parseInt(args[4]);
-                    int waitTime = args.length < 6 ? 1: Integer.parseInt(args[5]);
+                    int objects = args.length < 4 ? 100 : Integer.parseInt(args[3]);
+                    int subObjects = args.length < 5 ? 100 : Integer.parseInt(args[4]);
+                    int waitTime = args.length < 6 ? 0 : Integer.parseInt(args[5]);
                     task = new stretz.loom.benchmark.task.normal.MemoryTask(bloatCount, objects, subObjects, waitTime);
                     break;
                 default:
