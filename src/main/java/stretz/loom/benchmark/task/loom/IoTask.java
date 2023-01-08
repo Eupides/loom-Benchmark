@@ -39,6 +39,7 @@ public class IoTask implements Task {
         }
 
         FileUtil.cleanUp(this.path);
+        this.state = TaskState.DONE;
         return this.state;
     }
 
